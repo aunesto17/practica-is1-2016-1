@@ -1,11 +1,21 @@
 package domain;
 
+import javax.persistence.*;
+
+@Entity
 public class Matricula implements BaseEntity<Long> {
-	private Long id;
-
+	@Id
+	@SequenceGenerator(name = "Matricula_ID_GENERATOR", sequenceName = "Matricuala_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Matricula_ID_GENERATOR")
+	private Long ID_matricula;
+	
+	@ManyToOne
+	@PrimaryKeyJoinColumn(name="id", referencedColumnName="ID_curso")
 	private Curso curso;
-
-	private Alumno alumno;
+	
+	@ManyToOne
+    @PrimaryKeyJoinColumn(name="id", referencedColumnName="ID_alumno")
+    private Alumno alumno;
 
 	private Double nota;
 
@@ -13,12 +23,12 @@ public class Matricula implements BaseEntity<Long> {
 
 	@Override
 	public Long getId() {
-		return id;
+		return ID_matricula;
 	}
 
 	@Override
 	public void setId(Long id) {
-		this.id = id;
+		this.ID_matricula = id;
 	}
 
 	public Curso getCurso() {
